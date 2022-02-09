@@ -21,7 +21,8 @@
   },
   "dependencies": {
     "@types/three": "^0.131.1",
-    "three": "^0.132.2"
+    "three": "^0.132.2",
+    "watch": "^1.0.2"
   },
   "repository": {
     "type": "git",

@@ -4,7 +4,7 @@ const src = path.resolve(__dirname, 'src');
 
 module.exports = {
   mode: 'development',
-  entry: './src/index.ts',
+  entry: './index.ts',
   devtool: 'inline-source-map',
   module: {
     rules: [
@@ -20,7 +20,8 @@ module.exports = {
   },
   output: {
     filename: 'index.js',
-    path: src
+    path: src,
+    
   },
   devServer: {
     contentBase: src,

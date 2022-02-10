@@ -20,7 +20,7 @@ module.exports = {
   },
   output: {
     filename: 'index.js',
-    path: src,
+   
     
   },
   devServer: {

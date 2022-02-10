@@ -4,6 +4,7 @@ import * as THREE from 'three'
 import { CameraHelper } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
 
 // SCENE
 const scene = new THREE.Scene();
@@ -34,9 +35,17 @@ orbitControls.update();
 light()
 
 // FLOOR
-generateFloor()
 
-// MODEL WITH ANIMATIONS
+//generateFloor()
+
+
+
+// model
+
+
+    //
+
+// MODEL WITH ANIMATIONS (GLTF)
 var characterControls: CharacterControls
 new GLTFLoader().load('models/Soldier.glb', function (gltf) {
     const model = gltf.scene;
@@ -55,7 +64,9 @@ new GLTFLoader().load('models/Soldier.glb', function (gltf) {
     characterControls = new CharacterControls(model, mixer, animationsMap, orbitControls, camera,  'Idle')
 });
 
-// CONTROL KEYS
+
+
+// // CONTROL KEYS
 const keysPressed = {  }
 const keyDisplayQueue = new KeyDisplay();
 document.addEventListener('keydown', (event) => {
@@ -94,47 +105,50 @@ function onWindowResize() {
 }
 window.addEventListener('resize', onWindowResize);
 
-function generateFloor() {
-
-    const mesh = new THREE.Mesh( new THREE.PlaneGeometry( 100, 100 ), new THREE.MeshPhongMaterial( { color: 0x999999, depthWrite: false } ) );
+const mesh = new THREE.Mesh( new THREE.PlaneGeometry( 500, 500 ), new THREE.MeshPhongMaterial( { color: 0x999999, depthWrite: false } ) );
 				mesh.rotation.x = - Math.PI / 2;
 				mesh.receiveShadow = true;
 				scene.add( mesh );
-    // // TEXTURES
-    // const textureLoader = new THREE.TextureLoader();
-    // const placeholder = textureLoader.load("./textures/placeholder/placeholder.png");
-    // // const sandBaseColor = textureLoader.load("./textures/sand/Sand 002_COLOR.jpg");
-    // //const sandNormalMap = textureLoader.load("./textures/sand/Sand 002_NRM.jpg");
-    // //const sandHeightMap = textureLoader.load("./textures/sand/Sand 002_DISP.jpg");
-    // //const sandAmbientOcclusion = textureLoader.load("./textures/sand/Sand 002_OCC.jpg");
 
-    // const WIDTH = 4
-    // const LENGTH = 4
-    // const NUM_X = 15
-    // const NUM_Z = 15
+// function generateFloor() {
 
-    // const geometry = new THREE.PlaneGeometry(WIDTH, LENGTH, 100, 100);
-    // //const material = new THREE.MeshStandardMaterial(
-    //    // {
-    //         //map: sandBaseColor, normalMap: sandNormalMap,
-    //         //displacementMap: sandHeightMap, displacementScale: 0.1,
-    //         //aoMap: sandAmbientOcclusion
-    //    // })
-    // const material = new THREE.MeshPhongMaterial({ map: placeholder})
+    
 
-    // for (let i = 0; i < NUM_X; i++) {
-    //     for (let j = 0; j < NUM_Z; j++) {
-    //         const floor = new THREE.Mesh(geometry, material)
-    //         floor.receiveShadow = true
-    //         floor.rotation.x = - Math.PI / 2
+//     // TEXTURES
+//     const textureLoader = new THREE.TextureLoader();
+//     const placeholder = textureLoader.load("./textures/placeholder/placeholder.png");
+//     // const sandBaseColor = textureLoader.load("./textures/sand/Sand 002_COLOR.jpg");
+//     //const sandNormalMap = textureLoader.load("./textures/sand/Sand 002_NRM.jpg");
+//     //const sandHeightMap = textureLoader.load("./textures/sand/Sand 002_DISP.jpg");
+//     //const sandAmbientOcclusion = textureLoader.load("./textures/sand/Sand 002_OCC.jpg");
 
-    //         floor.position.x = i * WIDTH - (NUM_X / 2) * WIDTH
-    //         floor.position.z = j * LENGTH - (NUM_Z / 2) * LENGTH
+//     const WIDTH = 4
+//     const LENGTH = 4
+//     const NUM_X = 15
+//     const NUM_Z = 15
 
-    //         scene.add(floor)
-    //     }
-    // }
-}
+//     const geometry = new THREE.PlaneGeometry(WIDTH, LENGTH, 100, 100);
+//     //const material = new THREE.MeshStandardMaterial(
+//        // {
+//             //map: sandBaseColor, normalMap: sandNormalMap,
+//             //displacementMap: sandHeightMap, displacementScale: 0.1,
+//             //aoMap: sandAmbientOcclusion
+//        // })
+//     const material = new THREE.MeshPhongMaterial({ map: placeholder})
+
+//     for (let i = 0; i < NUM_X; i++) {
+//         for (let j = 0; j < NUM_Z; j++) {
+//             const floor = new THREE.Mesh(geometry, material)
+//             floor.receiveShadow = true
+//             floor.rotation.x = - Math.PI / 2
+
+//             floor.position.x = i * WIDTH - (NUM_X / 2) * WIDTH
+//             floor.position.z = j * LENGTH - (NUM_Z / 2) * LENGTH
+
+//             scene.add(floor)
+//         }
+//     }
+// }
 
 function light() {
     scene.add(new THREE.AmbientLight(0xffffff, 0.7))
@@ -153,3 +167,11 @@ function light() {
     scene.add(dirLight);
     // scene.add( new THREE.CameraHelper(dirLight.shadow.camera))
 }
+
+new GLTFLoader().load('models/icon.glb', function (gltf) {
+    const model = gltf.scene;
+    model.traverse(function (object: any) {
+        if (object.isMesh) object.castShadow = true;
+    });
+    scene.add(model);
+})
